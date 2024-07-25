@@ -4,6 +4,9 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 
+const cors = require('cors');
+const jukeboxRouter = require('./controllers/jukeboxes.js');
+
 const jukeboxRouter = require('./controllers/jukeboxes.js')
 
 mongoose.connect(process.env.MONGODB_URI);
@@ -17,6 +20,7 @@ app.use(express.json());
 // Routes go here
 
 app.use('/jukeboxes', jukeboxRouter)
+app.use(cors());
 
 app.listen(3000, () => {
   console.log('The express app is ready!');
