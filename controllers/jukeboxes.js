@@ -84,3 +84,22 @@ router.delete('/:jukeboxId', async (req, res) => {
 
     }
 })
+
+//testing the route first 
+// router.put('/:petId', async (req, res) => {
+//     // Add a message to test the route
+//     res.json({ message: `Update route with the param ${req.params.petId}` });
+//   });
+
+router.put('/:jukeboxId', async (req, res) => {
+    try {
+        const updatedJukebox = await Jukebox.findByIdAndUpdate(req.params.jukeboxId, req.body, {new: true}); //first argument is the ont to update, second arg is the one to replacte it with.third arg, the new one is the true one
+        if (!updatedJukebox) {
+            res.status(404).json({errormessage: 'Jukebox not found'});
+            return;
+        }
+    res.status(200).json(updatedJukebox);
+    } catch (error) {
+    res.status(500).json({error: error.message})
+    }
+})
