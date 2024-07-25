@@ -62,9 +62,25 @@ router.get('/:jukeboxId', async (req, res) => {
             // res.status(404);
             // throw new error ('Jukebox not found');
             res.status(404).json({error: 'Jukebox not found'})
+            return;
         }
         res.status(200).json(singleJukebox);
     } catch (error) {
         res.status(500).json({erorr: error.message});
+    }
+})
+
+
+router.delete('/:jukeboxId', async (req, res) => {
+    try { 
+        const deletedJukebox = await Jukebox.findByIdAndDelete(req.params.jukeboxId);
+        if (!deletedJukebox) {
+            res.status(404).json({error: 'Jukebox Not deleted'});
+            return;
+        } 
+        res.status(200).json(deletedJukebox)
+    } catch (error) {
+        res.status(500).json({error: error.message})
+
     }
 })
