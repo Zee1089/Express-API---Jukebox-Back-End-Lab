@@ -28,3 +28,43 @@ router.post('/', async (req, res) => {
 });
 
 module.exports = router;
+
+//testing route to find a single pet
+// router.get('/:jukeboxId', async (req, res) => {
+//   res.json({ message: `Show route with the param ${req.params.jukeboxId}`});
+// })
+
+
+// /:jukebodId will allow us to access the id parameter from the 
+// req.params object 
+
+// router.get('/:jukeboxId', async (req, res) => {
+//     try {
+//     const singleJukebox = await Jukebox.findById(req.params.body);
+//     if (!singleJukebox) {
+//         res.status(400);
+//         throw new Error ('Jukebox not found.');
+//     }
+//     res.status(200).json(singleJukebox)
+//  } catch (error) {
+//         if (res.statusCode === 404) {
+//             res.json({error: error.message});
+//         } else {
+//             res.status(500).json({ error: error.message })
+//         }
+//     }
+// });
+
+router.get('/:jukeboxId', async (req, res) => {
+    try {
+        const singleJukebox = await Jukebox.findById(req.params.jukeboxId)
+        if (!singleJukebox) {
+            // res.status(404);
+            // throw new error ('Jukebox not found');
+            res.status(404).json({error: 'Jukebox not found'})
+        }
+        res.status(200).json(singleJukebox);
+    } catch (error) {
+        res.status(500).json({erorr: error.message});
+    }
+})
